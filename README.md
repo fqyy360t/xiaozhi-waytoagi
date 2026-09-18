@@ -8,6 +8,8 @@
 
 > ⚠️ 本项目是**第三方改编版**，不是小智官方仓库。上游版权与许可证见文末。
 
+> 📦 **只想直接用？无需编译** —— 到 **[Releases 下载现成固件](https://github.com/fqyy360t/xiaozhi-waytoagi/releases/latest)**，把整片 `*-merged.bin` 烧到地址 `0x0` 即可（烧录命令见 [第五节](#五编译与烧录)）。
+
 <p align="center">
   <img src="docs/images/easyinput-v2-theme.jpg" alt="WaytoAGI AI 键盘（EasyInput V2）外观 / 主题" width="440">
 </p>
@@ -107,7 +109,20 @@
 
 ## 五、编译与烧录
 
-> 使用 **ESP-IDF v6.1**（Windows / PowerShell）。板型自动选择 `easyinput-v2`。
+### 方式一：直接下载固件（推荐，免编译）
+
+到 **[Releases](https://github.com/fqyy360t/xiaozhi-waytoagi/releases/latest)** 下载 **`xiaozhi-waytoagi-*-merged.bin`（整片固件）**，写入地址 **`0x0`**：
+
+```bash
+esptool.py --chip esp32s3 -p <你的串口> -b 460800 write_flash 0x0 xiaozhi-waytoagi-v1.0.0-merged.bin
+```
+
+> Windows 用 IDF 自带的 esptool：`python -m esptool --chip esp32s3 -p COMx -b 460800 write_flash 0x0 <固件文件>`
+> Release 里的 **`*-app.bin`** 是应用分区镜像，写入 `0x20000`，用于进阶 / OTA 升级。
+
+### 方式二：从源码编译烧录（需要 ESP-IDF v6.1）
+
+> Windows / PowerShell；板型自动选择 `easyinput-v2`。
 
 ```powershell
 # 1) 激活 IDF v6.1 环境（PowerShell）
