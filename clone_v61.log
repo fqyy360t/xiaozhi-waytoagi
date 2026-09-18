@@ -1,0 +1,99 @@
+Cloning into 'esp-idf-v6.1'...
+Updating files:  14% (2983/20981)Updating files:  15% (3148/20981)Updating files:  16% (3357/20981)Updating files:  17% (3567/20981)Updating files:  18% (3777/20981)Updating files:  19% (3987/20981)Updating files:  20% (4197/20981)Updating files:  21% (4407/20981)Updating files:  22% (4616/20981)Updating files:  23% (4826/20981)Updating files:  24% (5036/20981)Updating files:  25% (5246/20981)Updating files:  26% (5456/20981)Updating files:  27% (5665/20981)Updating files:  27% (5830/20981)Updating files:  28% (5875/20981)Updating files:  29% (6085/20981)Updating files:  30% (6295/20981)Updating files:  31% (6505/20981)Updating files:  32% (6714/20981)Updating files:  33% (6924/20981)Updating files:  34% (7134/20981)Updating files:  35% (7344/20981)Updating files:  36% (7554/20981)Updating files:  37% (7763/20981)Updating files:  38% (7973/20981)Updating files:  39% (8183/20981)Updating files:  40% (8393/20981)Updating files:  41% (8603/20981)Updating files:  42% (8813/20981)Updating files:  43% (9022/20981)Updating files:  43% (9223/20981)Updating files:  44% (9232/20981)Updating files:  45% (9442/20981)Updating files:  46% (9652/20981)Updating files:  47% (9862/20981)Updating files:  48% (10071/20981)Updating files:  49% (10281/20981)Updating files:  50% (10491/20981)Updating files:  51% (10701/20981)Updating files:  52% (10911/20981)Updating files:  53% (11120/20981)Updating files:  54% (11330/20981)Updating files:  55% (11540/20981)Updating files:  56% (11750/20981)Updating files:  57% (11960/20981)Updating files:  57% (12154/20981)Updating files:  58% (12169/20981)Updating files:  59% (12379/20981)Updating files:  60% (12589/20981)Updating files:  61% (12799/20981)Updating files:  62% (13009/20981)Updating files:  63% (13219/20981)Updating files:  64% (13428/20981)Updating files:  65% (13638/20981)Updating files:  66% (13848/20981)Updating files:  67% (14058/20981)Updating files:  68% (14268/20981)Updating files:  69% (14477/20981)Updating files:  70% (14687/20981)Updating files:  71% (14897/20981)Updating files:  72% (15107/20981)Updating files:  73% (15317/20981)Updating files:  73% (15357/20981)Updating files:  74% (15526/20981)Updating files:  75% (15736/20981)Updating files:  76% (15946/20981)Updating files:  77% (16156/20981)Updating files:  78% (16366/20981)Updating files:  79% (16575/20981)Updating files:  80% (16785/20981)Updating files:  81% (16995/20981)Updating files:  82% (17205/20981)Updating files:  83% (17415/20981)Updating files:  84% (17625/20981)Updating files:  85% (17834/20981)Updating files:  86% (18044/20981)Updating files:  87% (18254/20981)Updating files:  88% (18464/20981)Updating files:  89% (18674/20981)Updating files:  90% (18883/20981)Updating files:  90% (18886/20981)Updating files:  91% (19093/20981)Updating files:  92% (19303/20981)Updating files:  93% (19513/20981)Updating files:  94% (19723/20981)Updating files:  95% (19932/20981)Updating files:  96% (20142/20981)Updating files:  97% (20352/20981)Updating files:  98% (20562/20981)Updating files:  99% (20772/20981)Updating files: 100% (20981/20981)Updating files: 100% (20981/20981), done.
+Submodule 'components/bootloader/subproject/components/micro-ecc/micro-ecc' (https://github.com/kmackay/micro-ecc.git) registered for path 'components/bootloader/subproject/components/micro-ecc/micro-ecc'
+Submodule 'components/bt/controller/lib_esp32' (https://github.com/espressif/esp32-bt-lib.git) registered for path 'components/bt/controller/lib_esp32'
+Submodule 'components/bt/controller/lib_esp32c2/esp32c2-bt-lib' (https://github.com/espressif/esp32c2-bt-lib.git) registered for path 'components/bt/controller/lib_esp32c2/esp32c2-bt-lib'
+Submodule 'components/bt/controller/lib_esp32c3_family' (https://github.com/espressif/esp32c3-bt-lib.git) registered for path 'components/bt/controller/lib_esp32c3_family'
+Submodule 'components/bt/controller/lib_esp32c5/esp32c5-bt-lib' (https://github.com/espressif/esp32c5-bt-lib.git) registered for path 'components/bt/controller/lib_esp32c5/esp32c5-bt-lib'
+Submodule 'components/bt/controller/lib_esp32c6/esp32c6-bt-lib' (https://github.com/espressif/esp32c6-bt-lib.git) registered for path 'components/bt/controller/lib_esp32c6/esp32c6-bt-lib'
+Submodule 'components/bt/controller/lib_esp32h2/esp32h2-bt-lib' (https://github.com/espressif/esp32h2-bt-lib.git) registered for path 'components/bt/controller/lib_esp32h2/esp32h2-bt-lib'
+Submodule 'components/bt/controller/lib_esp32h4/esp32h4-bt-lib' (https://github.com/espressif/esp32h4-bt-lib.git) registered for path 'components/bt/controller/lib_esp32h4/esp32h4-bt-lib'
+Submodule 'components/bt/controller/lib_esp32s31/esp32s31-bt-lib' (https://github.com/espressif/esp32s31-bt-lib.git) registered for path 'components/bt/controller/lib_esp32s31/esp32s31-bt-lib'
+Submodule 'components/bt/esp_ble_audio/lib/lib' (https://github.com/espressif/esp-ble-audio-lib.git) registered for path 'components/bt/esp_ble_audio/lib/lib'
+Submodule 'components/bt/esp_ble_mesh/lib/lib' (https://github.com/espressif/esp-ble-mesh-lib.git) registered for path 'components/bt/esp_ble_mesh/lib/lib'
+Submodule 'components/bt/host/nimble/nimble' (https://github.com/espressif/esp-nimble.git) registered for path 'components/bt/host/nimble/nimble'
+Submodule 'components/cmock/CMock' (https://github.com/ThrowTheSwitch/CMock.git) registered for path 'components/cmock/CMock'
+Submodule 'components/esp_coex/lib' (https://github.com/espressif/esp-coex-lib.git) registered for path 'components/esp_coex/lib'
+Submodule 'components/esp_phy/lib' (https://github.com/espressif/esp-phy-lib.git) registered for path 'components/esp_phy/lib'
+Submodule 'components/esp_wifi/lib' (https://github.com/espressif/esp32-wifi-lib.git) registered for path 'components/esp_wifi/lib'
+Submodule 'components/heap/tlsf' (https://github.com/espressif/tlsf.git) registered for path 'components/heap/tlsf'
+Submodule 'components/lwip/lwip' (https://github.com/espressif/esp-lwip.git) registered for path 'components/lwip/lwip'
+Submodule 'components/mbedtls/mbedtls' (https://github.com/espressif/mbedtls.git) registered for path 'components/mbedtls/mbedtls'
+Submodule 'components/openthread/lib' (https://github.com/espressif/esp-thread-lib.git) registered for path 'components/openthread/lib'
+Submodule 'components/openthread/openthread' (https://github.com/espressif/openthread.git) registered for path 'components/openthread/openthread'
+Submodule 'components/protobuf-c/protobuf-c' (https://github.com/protobuf-c/protobuf-c.git) registered for path 'components/protobuf-c/protobuf-c'
+Submodule 'components/spiffs/spiffs' (https://github.com/pellepl/spiffs.git) registered for path 'components/spiffs/spiffs'
+Submodule 'components/unity/unity' (https://github.com/ThrowTheSwitch/Unity.git) registered for path 'components/unity/unity'
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/bootloader/subproject/components/micro-ecc/micro-ecc'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/bt/controller/lib_esp32'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/bt/controller/lib_esp32c2/esp32c2-bt-lib'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/bt/controller/lib_esp32c3_family'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/bt/controller/lib_esp32c5/esp32c5-bt-lib'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/bt/controller/lib_esp32c6/esp32c6-bt-lib'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/bt/controller/lib_esp32h2/esp32h2-bt-lib'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/bt/controller/lib_esp32h4/esp32h4-bt-lib'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/bt/controller/lib_esp32s31/esp32s31-bt-lib'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/bt/esp_ble_audio/lib/lib'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/bt/esp_ble_mesh/lib/lib'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/bt/host/nimble/nimble'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/cmock/CMock'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/esp_coex/lib'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/esp_phy/lib'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/esp_wifi/lib'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/heap/tlsf'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/lwip/lwip'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/mbedtls/mbedtls'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/openthread/lib'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/openthread/openthread'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/protobuf-c/protobuf-c'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/spiffs/spiffs'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/unity/unity'...
+Submodule path 'components/bootloader/subproject/components/micro-ecc/micro-ecc': checked out '24c60e243580c7868f4334a1ba3123481fe1aa48'
+Submodule path 'components/bt/controller/lib_esp32': checked out 'e4281c149690558467f75137d64bd5334076e7e1'
+Submodule path 'components/bt/controller/lib_esp32c2/esp32c2-bt-lib': checked out '6a5c0b8bfca1a2e984e89431b8ebf9b521dad5ea'
+Submodule path 'components/bt/controller/lib_esp32c3_family': checked out '0a08c4b32f3666003080b662a1a61794da24ff0f'
+Submodule path 'components/bt/controller/lib_esp32c5/esp32c5-bt-lib': checked out '0b5cb2d7cfb4078e951da36a695bc4fb37e52391'
+Submodule path 'components/bt/controller/lib_esp32c6/esp32c6-bt-lib': checked out 'a00f2d0a19c54b9ca31358754fbb8b9a08cbb92c'
+Submodule path 'components/bt/controller/lib_esp32h2/esp32h2-bt-lib': checked out '71685bf7530058c468ec9e28b2eebbe71df88741'
+From https://github.com/espressif/esp32h4-bt-lib
+ * branch            9358cd13cc50ed6bb099170eddd314ec3abfc76e -> FETCH_HEAD
+Submodule path 'components/bt/controller/lib_esp32h4/esp32h4-bt-lib': checked out '9358cd13cc50ed6bb099170eddd314ec3abfc76e'
+From https://github.com/espressif/esp32s31-bt-lib
+ * branch            849186e861821a30d2c3ef519dfdb08ef68b7cee -> FETCH_HEAD
+Submodule path 'components/bt/controller/lib_esp32s31/esp32s31-bt-lib': checked out '849186e861821a30d2c3ef519dfdb08ef68b7cee'
+From https://github.com/espressif/esp-ble-audio-lib
+ * branch            ebded291fc0d71924a94319f548d6260630500b8 -> FETCH_HEAD
+Submodule path 'components/bt/esp_ble_audio/lib/lib': checked out 'ebded291fc0d71924a94319f548d6260630500b8'
+Submodule path 'components/bt/esp_ble_mesh/lib/lib': checked out '8b693178d76ec2578abf46aec53c2fb895b63df7'
+Submodule path 'components/bt/host/nimble/nimble': checked out 'b3c38720cecb56d6a36adde7be95fa0c70caa4e0'
+Submodule path 'components/cmock/CMock': checked out 'eeecc49ce8af123cf8ad40efdb9673e37b56230f'
+Submodule 'vendor/c_exception' (https://github.com/throwtheswitch/cexception.git) registered for path 'components/cmock/CMock/vendor/c_exception'
+Submodule 'vendor/unity' (https://github.com/throwtheswitch/unity.git) registered for path 'components/cmock/CMock/vendor/unity'
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/cmock/CMock/vendor/c_exception'...
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/cmock/CMock/vendor/unity'...
+Submodule path 'components/cmock/CMock/vendor/c_exception': checked out '71b47be7c950f1bf5f7e5303779fa99a16224bb6'
+Submodule path 'components/cmock/CMock/vendor/unity': checked out 'cf949f45ca6d172a177b00da21310607b97bc7a7'
+From https://github.com/espressif/esp-coex-lib
+ * branch            02c57071231dbe9f7555afcbb8ef86e35f517292 -> FETCH_HEAD
+Submodule path 'components/esp_coex/lib': checked out '02c57071231dbe9f7555afcbb8ef86e35f517292'
+Submodule path 'components/esp_phy/lib': checked out 'b88e4b76e090ae59c51cb00b916d38def895b396'
+From https://github.com/espressif/esp32-wifi-lib
+ * branch              cce8a7328597181ae4e34962b93aae3b73508f33 -> FETCH_HEAD
+Submodule path 'components/esp_wifi/lib': checked out 'cce8a7328597181ae4e34962b93aae3b73508f33'
+Submodule path 'components/heap/tlsf': checked out '2867f6883a12920b1969ff9624c0ab0e4185c2ce'
+Submodule path 'components/lwip/lwip': checked out 'c6f2f878e7b0f86033214b85547d579be43351e3'
+Submodule path 'components/mbedtls/mbedtls': checked out 'ce3f3485a121c100f58f36d700cb35b060f6e866'
+From https://github.com/espressif/esp-thread-lib
+ * branch            4dd715391cfb2cf4d06825a17294514024e4dc12 -> FETCH_HEAD
+Submodule path 'components/openthread/lib': checked out '4dd715391cfb2cf4d06825a17294514024e4dc12'
+Submodule path 'components/openthread/openthread': checked out '43cc05a9bcf780bd758bad53d897e2d88cf8cb75'
+Submodule 'third_party/mbedtls/repo' (https://github.com/Mbed-TLS/mbedtls.git) registered for path 'components/openthread/openthread/third_party/mbedtls/repo'
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/openthread/openthread/third_party/mbedtls/repo'...
+Submodule path 'components/openthread/openthread/third_party/mbedtls/repo': checked out 'e185d7fd85499c8ce5ca2a54f5cf8fe7dbe3f8df'
+Submodule 'framework' (https://github.com/Mbed-TLS/mbedtls-framework) registered for path 'components/openthread/openthread/third_party/mbedtls/repo/framework'
+Cloning into 'D:/Espressif/frameworks/esp-idf-v6.1/components/openthread/openthread/third_party/mbedtls/repo/framework'...
+Submodule path 'components/openthread/openthread/third_party/mbedtls/repo/framework': checked out '457996474728cb8e968ed21953b72f74d2f536b2'
+Submodule path 'components/protobuf-c/protobuf-c': checked out 'abc67a11c6db271bedbb9f58be85d6f4e2ea8389'
+Submodule path 'components/spiffs/spiffs': checked out 'ad902cadceb39d0825a97e25ecb5867641f606ba'
+Submodule path 'components/unity/unity': checked out 'bf560290f6020737eafaa8b5cbd2177c3956c03f'
+CLONE_EXIT=0

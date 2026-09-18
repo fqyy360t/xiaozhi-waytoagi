@@ -1,0 +1,9 @@
+{
+    "type": "easyinput-v2",
+    "target": "esp32s3",
+    "builds": [
+        {
+            "name": "easyinput-v2"
+        }
+    ]
+}
