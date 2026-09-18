@@ -8,6 +8,12 @@
 
 > ⚠️ 本项目是**第三方改编版**，不是小智官方仓库。上游版权与许可证见文末。
 
+<p align="center">
+  <img src="docs/images/easyinput-v2-theme.jpg" alt="WaytoAGI AI 键盘（EasyInput V2）外观 / 主题" width="440">
+</p>
+
+<p align="center"><em>▲ WaytoAGI AI 键盘（EasyInput V2）—— 像素风键帽 + 半透明紫色外壳 + 青色旋钮</em></p>
+
 ---
 
 ## 一、能做什么（功能总览）
@@ -73,6 +79,12 @@
 | 致命错误（Fatal Error） | 红色 | 快闪（200ms） | 出现异常 |
 
 **一句话记法**：**白色亮 = 在听你说；绿色亮 = 小智在说话；红色闪 = 出错了。**
+
+<p align="center">
+  <img src="docs/images/easyinput-v2-working.jpg" alt="EasyInput V2 工作状态" width="440">
+</p>
+
+<p align="center"><em>▲ 工作状态实拍（5 颗 WS2812 随状态变化，旋钮为音量）</em></p>
 
 ---
 
