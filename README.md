@@ -84,7 +84,7 @@
   <img src="docs/images/easyinput-v2-working.jpg" alt="EasyInput V2 工作状态" width="440">
 </p>
 
-<p align="center"><em>▲ 工作状态实拍（5 颗 WS2812 随状态变化，旋钮为音量）</em></p>
+<p align="center"><em>▲ 工作状态实拍：EasyInput V2 与小智（5 颗 WS2812 已点亮）</em></p>
 
 ---
 
