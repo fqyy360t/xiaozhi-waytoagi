@@ -1,172 +1,140 @@
-# An MCP-based Chatbot
+# xiaozhi-waytoagi
 
-(English | [中文](README_zh.md) | [日本語](README_ja.md))
+**WaytoAGI 社区 AI 键盘（EasyInput V2）的小智固件 —— 无屏版**
 
-## Introduction
+本项目基于开源项目 [xiaozhi-esp32（小智 AI）](https://github.com/78/xiaozhi-esp32) 二次开发，**专门适配 WaytoAGI 社区的 AI 键盘**（硬件名 EasyInput V2 / PCB 丝印 AI Keyboard V2.1，固件板型别名 `easyinput-v2`）。
 
-👉 [Human: Give AI a camera vs AI: Instantly finds out the owner hasn't washed hair for three days【bilibili】](https://www.bilibili.com/video/BV1bpjgzKEhd/)
+这块键盘**没有屏幕**，所以全部交互都靠 **语音 + 5 颗 RGB 灯 + 按键 / 旋钮** 完成。本固件为它补齐了板级支持（音频、灯效、按键、编码器、电池），并修好了两个真机问题（见 [第七节](#七与原版-xiaozhi-esp32-的差异)）。
 
-👉 [Handcraft your AI girlfriend, beginner's guide【bilibili】](https://www.bilibili.com/video/BV1XnmFYLEJN/)
+> ⚠️ 本项目是**第三方改编版**，不是小智官方仓库。上游版权与许可证见文末。
 
-As a voice interaction entry, the XiaoZhi AI chatbot leverages the AI capabilities of large models like Qwen / DeepSeek, and achieves multi-terminal control via the MCP protocol.
+---
 
-<img src="docs/mcp-based-graph.jpg" alt="Control everything via MCP" width="320">
+## 一、能做什么（功能总览）
 
-## Recent Updates
+### 1. 语音对话（核心）
+- **离线语音唤醒**：喊「**你好小智**」即可唤醒，无需联网、无需按键（基于乐鑫 [ESP-SR](https://github.com/espressif/esp-sr) WakeNet9）。
+- 唤醒后可**自然语言对话**：闲聊、问天气、问知识等（接大模型，支持 WebSocket 与 MQTT+UDP 两种传输）。
+- 支持**打断**：小智说话时再次唤醒或按键，可打断当前播报。
 
-- The project now requires ESP-IDF v6.0.1 or later. [ESP-IDF v6.1](https://github.com/espressif/esp-idf/releases/tag/v6.1) is the recommended SDK. ESP-IDF 5.x is no longer supported. The current matrix contains 171 variants; ESP32-S31 builds require IDF 6.1 or later.
-- MQTT and BluFi cryptographic code has migrated to PSA Crypto. IDF 6 component splits and third-party dependency compatibility have also been addressed.
-- Audio pipeline concurrency, MQTT/UDP packet validation, and release-matrix selection have been hardened.
-- ESP32-P4 Rev1 and Rev3 are both supported on IDF 6 with ESP-SR 2.4.7.
+### 2. 音量控制
+- **旋钮旋转**直接调音量：每转一格 ±5，范围 0–100，实时生效。
+- **语音控制**：直接说「把音量调到 50」「声音大一点」，小智会调用设备工具帮你调。
 
-### Features Implemented
+### 3. 设备状态查询（语音）
+- 可以**语音查询**设备的实时状态，例如：
+  - 「现在电量多少？」
+  - 「当前音量是几？」
+  - 「网络连上了吗？」
+- 由内置 MCP 工具 `self.get_device_status` 提供（返回音量、电池、网络等实时信息）。
 
-- Wi-Fi, wired Ethernet, USB RNDIS, and ML307/EC801E or NT26 Cat.1 4G networking; supported boards can switch between Wi-Fi and 4G
-- Offline voice wake-up with [ESP-SR](https://github.com/espressif/esp-sr), including customizable wake words
-- Two communication transports: [WebSocket](docs/websocket.md) and [MQTT + UDP](docs/mqtt-udp.md)
-- Opus audio streaming with conventional streaming ASR + LLM + TTS pipelines and Realtime end-to-end voice models; AEC-capable hardware supports realtime full-duplex interaction
-- Speaker recognition, identifies the current speaker [3D Speaker](https://github.com/modelscope/3D-Speaker)
-- OLED / LCD displays with emoji and rich expression support, plus camera vision input on supported boards
-- Battery display and power management
-- 39 interface languages, with localized voice prompts where available and English fallback
-- ESP32, ESP32-C3, ESP32-C5, ESP32-C6, ESP32-S3, and ESP32-P4 chip platforms
-- Wi-Fi provisioning through hotspot or BluFi
-- Device-side MCP for device control (Speaker, LED, Servo, GPIO, etc.)
-- Cloud-side MCP to extend large model capabilities (smart home control, PC desktop operation, knowledge search, email, etc.)
-- Customizable wake words, fonts, emojis, and chat backgrounds with online web-based editing ([Custom Assets Generator](https://github.com/78/xiaozhi-assets-generator))
+### 4. 电池与充电
+- 板载电池电压检测（VBAT/2 分压进 ADC）+ 充电状态检测。
+- 电量可通过语音查询，也会在设备状态里上报。
 
-## Hardware
+### 5. 灯效反馈
+- 5 颗 WS2812 RGB 灯随设备状态变化（待机 / 聆听 / 说话 / 配网 / 报错…），**一眼看状态**。详见 [第三节](#三灯效说明5-颗-ws2812)。
 
-### Breadboard DIY Practice
+### 6. 配网
+- 开机若未配网，按 **S1** 进入 Wi-Fi 配网模式（灯变蓝色慢闪），用手机完成配网。
 
-See the Feishu document tutorial:
+> 说明：因为本板**无屏**，所以没有「屏幕亮度 / 主题」这类工具；也没有独立的语音灯控工具（灯效是**自动**跟随状态的）。
 
-👉 ["XiaoZhi AI Chatbot Encyclopedia"](https://ccnphfhqs21z.feishu.cn/wiki/F5krwD16viZoF0kKkvDcrZNYnhb?from=from_copylink)
+---
 
-Breadboard demo:
+## 二、交互说明（按键与旋钮）
 
-![Breadboard Demo](docs/v1/wiring2.jpg)
+| 控件 | 位置 | 作用 |
+| --- | --- | --- |
+| **旋转编码器（旋钮）** | 板面 | **旋转 = 调节音量**（每格 ±5，范围 0–100） |
+| **旋钮按压（S9）** | 编码器中心 | **开始 / 结束对话**（也可用于打断小智说话） |
+| **S1 按键** | 主交互键 | ① 开机配网阶段：**进入 Wi-Fi 配网模式**；② 正常运行：**开始 / 结束对话**（同「打断」） |
+| **S2–S8 按键** | 其余主键 | **预留**：当前固件未绑定动作，留作后续 MCP / App 扩展 |
+| **绿色状态灯** | 板面 | 系统就绪指示（上电即亮） |
 
-### Supports 138 Board Directories and 171 Release Variants (Partial List)
+> ⚠️ **GPIO0 是 BOOT0 / 下载键**，属刷机入口，**不是**普通产品键，请勿当作功能键使用。
 
-- <a href="https://oshwhub.com/li-chuang-kai-fa-ban/li-chuang-shi-zhan-pai-esp32-s3-kai-fa-ban" target="_blank" title="LiChuang ESP32-S3 Development Board">LiChuang ESP32-S3 Development Board</a>
-- <a href="https://github.com/espressif/esp-box" target="_blank" title="Espressif ESP32-S3-BOX-3">Espressif ESP32-S3-BOX-3</a>
-- <a href="https://docs.m5stack.com/zh_CN/core/CoreS3" target="_blank" title="M5Stack CoreS3">M5Stack CoreS3</a>
-- <a href="https://docs.m5stack.com/en/atom/Atomic%20Echo%20Base" target="_blank" title="AtomS3R + Echo Base">M5Stack AtomS3R + Echo Base</a>
-- <a href="https://gf.bilibili.com/item/detail/1108782064" target="_blank" title="Magic Button 2.4">Magic Button 2.4</a>
-- <a href="https://www.waveshare.net/shop/ESP32-S3-Touch-AMOLED-1.8.htm" target="_blank" title="Waveshare ESP32-S3-Touch-AMOLED-1.8">Waveshare ESP32-S3-Touch-AMOLED-1.8</a>
-- <a href="https://github.com/Xinyuan-LilyGO/T-Circle-S3" target="_blank" title="LILYGO T-Circle-S3">LILYGO T-Circle-S3</a>
-- <a href="https://oshwhub.com/tenclass01/xmini_c3" target="_blank" title="XiaGe Mini C3">XiaGe Mini C3</a>
-- <a href="https://oshwhub.com/movecall/cuican-ai-pendant-lights-up-y" target="_blank" title="Movecall CuiCan ESP32S3">CuiCan AI Pendant</a>
-- <a href="https://github.com/WMnologo/xingzhi-ai" target="_blank" title="WMnologo-Xingzhi-1.54">WMnologo-Xingzhi-1.54TFT</a>
-- <a href="https://www.seeedstudio.com/SenseCAP-Watcher-W1-A-p-5979.html" target="_blank" title="SenseCAP Watcher">SenseCAP Watcher</a>
-- <a href="https://www.bilibili.com/video/BV1BHJtz6E2S/" target="_blank" title="ESP-HI Low Cost Robot Dog">ESP-HI Low Cost Robot Dog</a>
+---
 
-<div style="display: flex; justify-content: space-between;">
-  <a href="docs/v1/lichuang-s3.jpg" target="_blank" title="LiChuang ESP32-S3 Development Board">
-    <img src="docs/v1/lichuang-s3.jpg" width="240" />
-  </a>
-  <a href="docs/v1/espbox3.jpg" target="_blank" title="Espressif ESP32-S3-BOX3">
-    <img src="docs/v1/espbox3.jpg" width="240" />
-  </a>
-  <a href="docs/v1/m5cores3.jpg" target="_blank" title="M5Stack CoreS3">
-    <img src="docs/v1/m5cores3.jpg" width="240" />
-  </a>
-  <a href="docs/v1/atoms3r.jpg" target="_blank" title="AtomS3R + Echo Base">
-    <img src="docs/v1/atoms3r.jpg" width="240" />
-  </a>
-  <a href="docs/v1/magiclick.jpg" target="_blank" title="Magic Button 2.4">
-    <img src="docs/v1/magiclick.jpg" width="240" />
-  </a>
-  <a href="docs/v1/waveshare.jpg" target="_blank" title="Waveshare ESP32-S3-Touch-AMOLED-1.8">
-    <img src="docs/v1/waveshare.jpg" width="240" />
-  </a>
-  <a href="docs/v1/lilygo-t-circle-s3.jpg" target="_blank" title="LILYGO T-Circle-S3">
-    <img src="docs/v1/lilygo-t-circle-s3.jpg" width="240" />
-  </a>
-  <a href="docs/v1/xmini-c3.jpg" target="_blank" title="XiaGe Mini C3">
-    <img src="docs/v1/xmini-c3.jpg" width="240" />
-  </a>
-  <a href="docs/v1/movecall-cuican-esp32s3.jpg" target="_blank" title="CuiCan">
-    <img src="docs/v1/movecall-cuican-esp32s3.jpg" width="240" />
-  </a>
-  <a href="docs/v1/wmnologo_xingzhi_1.54.jpg" target="_blank" title="WMnologo-Xingzhi-1.54">
-    <img src="docs/v1/wmnologo_xingzhi_1.54.jpg" width="240" />
-  </a>
-  <a href="docs/v1/sensecap_watcher.jpg" target="_blank" title="SenseCAP Watcher">
-    <img src="docs/v1/sensecap_watcher.jpg" width="240" />
-  </a>
-  <a href="docs/v1/esp-hi.jpg" target="_blank" title="ESP-HI Low Cost Robot Dog">
-    <img src="docs/v1/esp-hi.jpg" width="240" />
-  </a>
-</div>
+## 三、灯效说明（5 颗 WS2812）
 
-## Software
+灯带：5 颗串联 WS2812，接 **GPIO12**，GRB 格式。配色逻辑：**冷色 = 开机 / 配网，白 = 录音中，绿 = 输出中，红 = 异常**。
 
-### Firmware Flashing
+| 设备状态 | 颜色 | 动效 | 含义 |
+| --- | --- | --- | --- |
+| 开机（Starting） | 青色 | 扫光 | 上电启动 |
+| 配网（WiFi Configuring） | 蓝色 | 慢闪（500ms） | 等待手机配网 |
+| 待机在线（Idle） | 冷白 | 呼吸（1200ms） | 待机，随时可唤醒 |
+| 连接服务器（Connecting） | 蓝色微光 | 常亮 | 正在连接 |
+| **聆听（Listening）** | **白色** | **常亮** | **正在录音（你在说话）** |
+| 说话 / 通知（Speaking） | 绿色 | 常亮 | 小智正在输出 |
+| OTA 升级（Upgrading） | 绿色 | 快闪（120ms） | 正在升级 |
+| 激活（Activating） | 绿色 | 慢闪（500ms） | 正在激活 |
+| 致命错误（Fatal Error） | 红色 | 快闪（200ms） | 出现异常 |
 
-For beginners, it is recommended to use the firmware that can be flashed without setting up a development environment.
+**一句话记法**：**白色亮 = 在听你说；绿色亮 = 小智在说话；红色闪 = 出错了。**
 
-The firmware connects to the official [xiaozhi.me](https://xiaozhi.me) server by default. Personal users can register an account to use the Qwen real-time model for free.
+---
 
-👉 [Beginner's Firmware Flashing Guide](https://ccnphfhqs21z.feishu.cn/wiki/Zpz4wXBtdimBrLk25WdcXzxcnNS)
+## 四、硬件规格
 
-### Development Environment
+| 项目 | 参数 |
+| --- | --- |
+| 主控 | ESP32-S3R8（双核 LX7 @240MHz） |
+| 内存 | 8MB Octal PSRAM |
+| 存储 | 16MB Flash |
+| 音频输入 | I2S 数字麦克风（BCLK=9 / WS=10 / DIN=11） |
+| 音频输出 | MAX98357A 功放（BCLK=14 / LRCK=13 / DOUT=15） |
+| 灯效 | 5× WS2812（GPIO12）+ 1× 绿色状态灯（GPIO42） |
+| 交互 | 旋转编码器（A=17 / B=16，按压 S9=18）、S1 主键（GPIO2） |
+| 电源 | 共享电源域使能 GPIO8（灯 + 麦克风 + 功放，先使能再初始化） |
+| 电池 | 电量 ADC（GPIO4，VBAT/2）、分压使能 GPIO5、充电检测 GPIO39、外部供电检测 GPIO40 |
+| 接口 | 原生 USB-C（下载 + 供电） |
 
-- Cursor or VSCode
-- Install the ESP-IDF plugin. The minimum SDK is [ESP-IDF v6.0.1](https://github.com/espressif/esp-idf/releases/tag/v6.0.1); [ESP-IDF v6.1](https://github.com/espressif/esp-idf/releases/tag/v6.1) is recommended. ESP-IDF 5.x is not supported.
-- Linux is better than Windows for faster compilation and fewer driver issues
-- This project uses Google C++ code style, please ensure compliance when submitting code
+---
 
-### Developer Documentation
+## 五、编译与烧录
 
-- [Custom Board Guide](docs/custom-board.md) - Learn how to create custom boards for XiaoZhi AI
-- [MCP Protocol IoT Control Usage](docs/mcp-usage.md) - Learn how to control IoT devices via MCP protocol
-- [MCP Protocol Interaction Flow](docs/mcp-protocol.md) - Device-side MCP protocol implementation
-- [MQTT + UDP Hybrid Communication Protocol Document](docs/mqtt-udp.md)
-- [A detailed WebSocket communication protocol document](docs/websocket.md)
+> 使用 **ESP-IDF v6.1**（Windows / PowerShell）。板型自动选择 `easyinput-v2`。
 
-## Large Model Configuration
+```powershell
+# 1) 激活 IDF v6.1 环境（PowerShell）
+#    注意：必须「点源」执行；系统 python 版本要与 IDF 的 venv 匹配
+. <IDF_PATH>\export.ps1
 
-If you already have a XiaoZhi AI chatbot device and have connected to the official server, you can log in to the [xiaozhi.me](https://xiaozhi.me) console for configuration.
+# 2) 编译（build.py 会依据 board 名自动选中 easyinput-v2）
+python scripts\build.py easyinput-v2
 
-👉 [Backend Operation Video Tutorial (Old Interface)](https://www.bilibili.com/video/BV1jUCUY2EKM/)
+# 3) 烧录（把 COMx 换成你的串口）
+idf.py -p COMx flash
+```
 
-## Related Open Source Projects
+**三个 Windows 环境坑：**
 
-For server deployment on personal computers, refer to the following open-source projects:
+1. **系统 python ≠ IDF venv 版本** → 会报 `venv not found`。解决办法：先把 IDF venv 的 `Scripts` 目录加进 PATH，让 `python` 指向正确版本。
+2. **`export.ps1` 必须用 `.`（点源）执行**，用 `& ` 或管道会丢失环境变量 → 报 `ESP-IDF version was not detected`。
+3. **建议从 PATH 移除 `ccache`**：某些 Windows 环境下 `python → idf.py → ninja → ccache` 的深层进程派发拉不起 ccache，报 `CreateProcess failed: 系统找不到指定的文件`，表现为**大量文件“编译失败”**。ccache 仅做加速、并非必需，去掉即可正常编译。
 
-- [xinnan-tech/xiaozhi-esp32-server](https://github.com/xinnan-tech/xiaozhi-esp32-server) Python server
-- [joey-zhou/xiaozhi-esp32-server-java](https://github.com/joey-zhou/xiaozhi-esp32-server-java) Java server
-- [AnimeAIChat/xiaozhi-server-go](https://github.com/AnimeAIChat/xiaozhi-server-go) Golang server
-- [hackers365/xiaozhi-esp32-server-golang](https://github.com/hackers365/xiaozhi-esp32-server-golang) Golang server
+---
 
-Other client projects using the XiaoZhi communication protocol:
+## 六、已知问题
 
-- [huangjunsen0406/py-xiaozhi](https://github.com/huangjunsen0406/py-xiaozhi) Python client
-- [TOM88812/xiaozhi-android-client](https://github.com/TOM88812/xiaozhi-android-client) Android client
-- [100askTeam/xiaozhi-linux](http://github.com/100askTeam/xiaozhi-linux) Linux client by 100ask
-- [78/xiaozhi-sf32](https://github.com/78/xiaozhi-sf32) Bluetooth chip firmware by Sichuan
-- [QuecPython/solution-xiaozhiAI](https://github.com/QuecPython/solution-xiaozhiAI) QuecPython firmware by Quectel
+- **开机偶发掉电重启**：当 USB 口 / 线供电不足时，开机瞬间（WS2812 + 功放 + Wi-Fi 发射的电流冲击）可能触发 `Brownout detector` 复位。换供电更强的 USB 口 / 线或带独立供电的 Hub 即可。**与固件逻辑无关。**
 
-Custom Assets Tools:
+---
 
-- [78/xiaozhi-assets-generator](https://github.com/78/xiaozhi-assets-generator) Custom Assets Generator (Wake words, fonts, emojis, backgrounds)
+## 七、与原版 xiaozhi-esp32 的差异
 
-## About the Project
+- 新增板型 **`easyinput-v2`**（**无屏**）。
+- **麦克风使用 I2S 右声道**（`I2S_STD_SLOT_RIGHT`）：本键盘的 I2S 麦克风数据落在 WS 高电平（右声道），若用默认左声道会采到静音 —— 表现为「喊你好小智没反应、说话没有回应」。
+- **无屏板提前 `lv_init()`**：小智的资源配置模块会**先构造 LVGL 字体、后判断显示设备**，无屏板若不初始化 LVGL 会在启动时崩溃（`LoadProhibited`）。本固件在板子初始化最前调用 `lv_init()` 规避。
+- 自定义 5 颗 WS2812 的**状态灯效**（`EasyInputV2Strip`）。
+- 板级支持：旋转编码器调音量、S1 按键、电池监测。
 
-This is an open-source ESP32 project, released under the MIT license, allowing anyone to use it for free, including for commercial purposes.
+---
 
-We hope this project helps everyone understand AI hardware development and apply rapidly evolving large language models to real hardware devices.
+## 八、许可证与致谢
 
-If you have any ideas or suggestions, please feel free to raise Issues or join our [Discord](https://discord.gg/C759fGMBcZ) or QQ group: 1095994019
-
-## Star History
-
-<a href="https://star-history.com/#78/xiaozhi-esp32&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=78/xiaozhi-esp32&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=78/xiaozhi-esp32&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=78/xiaozhi-esp32&type=Date" />
- </picture>
-</a>
+- 本项目基于 **[xiaozhi-esp32](https://github.com/78/xiaozhi-esp32)**（作者：Shenzhen Xinzhi Future Technology Co., Ltd.，**MIT License**）二次开发，保留上游许可证。
+- 硬件事实（引脚、电源域、器件型号）依据 **EasyInput V2 硬件合同**（`easyinput-board-cy`），而非通用 ESP32 教程。
+- 适配目标：**WaytoAGI 社区的 AI 键盘**。
